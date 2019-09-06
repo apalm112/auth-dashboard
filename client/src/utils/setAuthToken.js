@@ -1,11 +1,10 @@
-import axios from "axios";
-
 /*********************************************************
 
       MERN-AUTH FILE.
 
 **********************************************************/
 
+import axios from "axios";
 
 const setAuthToken = token => {
   if (token) {

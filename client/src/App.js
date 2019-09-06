@@ -1,3 +1,9 @@
+/*********************************************************
+
+      Main application entry point for Shards Dashboard.
+
+**********************************************************/
+
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -16,19 +22,12 @@ import Dashboard from "./components/dashboard/Dashboard";
 
 import "./App.css";
 
-/*********************************************************
-
-      Main application entry point for Shards Dashboard.
-
-**********************************************************/
 import routes from "./routes";
 import withTracker from "./withTracker";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/main.scss";
 // end SD imports
-
-
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -49,6 +48,7 @@ if (localStorage.jwtToken) {
     window.location.href = "./login";
   }
 }
+
 class App extends Component {
   render() {
     return (

@@ -25,7 +25,7 @@ const Register = () => (
             {/* Logo */}
             <img
               className="auth-form__logo d-table mx-auto mb-3"
-              src={require("../images/shards-dashboards-logo.svg")}
+              src={require("../public/Logo.ico")}
               alt="Shards Dashboards - Register Template"
             />
 

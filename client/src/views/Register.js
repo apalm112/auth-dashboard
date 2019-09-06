@@ -22,10 +22,10 @@ const Register = () => (
       <Col lg="3" md="5" className="auth-form mx-auto my-auto">
         <Card>
           <CardBody>
-            {/* Logo */}
+            {/* Logo shards-dashboards-logo.svg*/}
             <img
               className="auth-form__logo d-table mx-auto mb-3"
-              src={require("../public/Logo.ico")}
+              src={require("../images/Logo.png")}
               alt="Shards Dashboards - Register Template"
             />
 

@@ -29,6 +29,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/main.scss";
 // end SD imports
 
+/* MERN-AUTH CODE BLOCK  */
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -52,7 +53,8 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      // MERN-AUTH LINE
+      <Provider store={store}> 
         <Router basename={process.env.REACT_APP_BASENAME || ""}>
 
           {/* START OF SD CODE */}

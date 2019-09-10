@@ -13,6 +13,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  age: {
+    type: Number,
+    // required: true
+  },
+  gender: {
+    type: String,
+    // required: true
+  },
   email: {
     type: String,
     required: true
@@ -27,4 +35,8 @@ const UserSchema = new Schema({
   }
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
+// module.exports = User = mongoose.model("users", UserSchema);
+
+var User = mongoose.model('users', UserSchema);
+
+module.exports.User = User;

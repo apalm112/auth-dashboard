@@ -17,6 +17,29 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
+// @route GET api/analytics
+// @desc GET data from mLab neovu Database
+// @access Public
+router.get("/analytics", (req, res) => {
+  // Data display: GET data from DB, save to State & display it.
+  User.find({})
+    .exec(function(error, user) {
+      var results = user.map(curr => {
+        var num_Vu_opened = curr.num_Vu_opened;
+        var vu_Duration = curr.vu_Duration;
+        var button_taps = curr.button_taps;
+        return {
+          num_Vu_opened: num_Vu_opened,
+          vu_Duration: vu_Duration,
+          button_taps: button_taps
+        };
+      });
+      res.send(results);
+    });
+});
+
+
+
 // @route POST api/users/register
 // @desc Register user
 // @access Public

@@ -10,10 +10,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 // const MongoClient = require('mongodb').MongoClient;
 const passport = require("passport");
-
+const User = require('./models/User').User;
+const mLabDB = require("./config/keys").mongoURI;
 const MONGOLAB_URI = process.env.MONGOLAB_URI;
+const router = require("./routes/api/users");
 
-const users = require("./routes/api/users");
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -31,12 +33,11 @@ ATTEMPT TO USE ATLAS, NOT WORKING:
 const uri = "mongodb+srv://Palmer:#mXzn61!KYei9W@xlg-qmuoh.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-  const collection = client.db("test").collection("devices");
+  const collection = client.mLabDB("test").collection("devices");
   // perform actions on the collection object
   client.close(); 
 });
 /******************************************************************** */
-const db = require("./config/keys").mongoURI;
 
 const options = {
   autoIndex: false, // Don't build indexes
@@ -49,7 +50,7 @@ const options = {
 // Connect to MongoDB
 mongoose
   .connect(
-    db || 'mongodb://localhost:27017/', options
+    mLabDB || 'mongodb://localhost:27017/', options
     // { autoIndex: false, useNewUrlParser: true }
   )
   .then(() => console.log("\x1b[42m%s\x1b[0m", "MongoDB successfully connected"))
@@ -70,13 +71,10 @@ database.once('open', () => {
 
 // Passport middleware
 app.use(passport.initialize());
-
 // Passport config
 require("./config/passport")(passport);
 
 // Routes
-app.use("/api/users", users);
-
-const port = process.env.PORT || 5000;
+app.use("/", router);
 
 app.listen(port, () => console.log('\x1b[45m%s\x1b[0m', `Server up and running on port ${port} !`));

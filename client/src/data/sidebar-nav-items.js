@@ -2,7 +2,7 @@ export default function () {
   return [{
     title: 'Dashboards',
     items: [{
-      title: 'Analytics',
+      title: 'NeoVu Analytics',
       to: '/analytics',
       htmlBefore: '<i class="material-icons">&#xE917;</i>',
       htmlAfter: '',

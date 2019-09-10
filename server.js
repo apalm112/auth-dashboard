@@ -5,15 +5,21 @@
 **********************************************************/
 
 const express = require("express");
+const router = express.Router();
+
 require('dotenv').config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 // const MongoClient = require('mongodb').MongoClient;
 const passport = require("passport");
 const User = require('./models/User').User;
+const Vu = require('./models/Vu').Vu;
 const mLabDB = require("./config/keys").mongoURI;
 const MONGOLAB_URI = process.env.MONGOLAB_URI;
-const router = require("./routes/api/users");
+
+// Get Routes
+// const vu_Router = require("./routes/vu");
+// const router = require("./routes/api/users");
 
 const port = process.env.PORT || 5000;
 
@@ -26,6 +32,10 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+// Routes
+// app.use("/analytics", vu_Router);
+// app.use("/", router);
 
 // DB Config
 /********************************************************************
@@ -45,7 +55,8 @@ const options = {
   reconnectInterval: 500, // Reconnect every 500ms
   poolSize: 10, // Maintain up to 10 socket connections
   // If not connected, return errors immediately rather than waiting for reconnect
-  bufferMaxEntries: 0
+  bufferMaxEntries: 0,
+  useNewUrlParser: true
 };
 // Connect to MongoDB
 mongoose
@@ -74,7 +85,11 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 
-// Routes
-app.use("/", router);
-
 app.listen(port, () => console.log('\x1b[45m%s\x1b[0m', `Server up and running on port ${port} !`));
+
+
+Vu.find(function(err, data) {
+  if (err) return err;
+  console.log('+++++++++++++++hot phuckits!++++++++++++++++', data);
+  return data;
+});

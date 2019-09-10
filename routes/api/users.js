@@ -16,15 +16,18 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+const Vu = require("../../models/Vu");
 
 // @route GET api/analytics
 // @desc GET data from mLab neovu Database
 // @access Public
 router.get("/analytics", (req, res) => {
-  // Data display: GET data from DB, save to State & display it.
-  User.find({})
-    .exec(function(error, user) {
-      var results = user.map(curr => {
+  // Data display: GET data from DB, save to State.
+  console.log('+++++++++++++++++++++++++++++++');
+
+  Vu.find({ 'num_Vu_Opened': { $ne: [] } })
+    .exec(function(error, vuData) {
+      var results = vuData.map((curr) => {
         var num_Vu_opened = curr.num_Vu_opened;
         var vu_Duration = curr.vu_Duration;
         var button_taps = curr.button_taps;
@@ -34,6 +37,9 @@ router.get("/analytics", (req, res) => {
           button_taps: button_taps
         };
       });
+      console.log('+++++++++++++++++++++++++++++++');
+      
+      console.log(results);
       res.send(results);
     });
 });

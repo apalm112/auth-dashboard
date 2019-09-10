@@ -24,19 +24,20 @@ const Login = () => (
           <CardBody>
             {/* Logo */}
             <img
+              style={{ borderColor: "#28C1EA", maxWidth: "70%" }}
               className="auth-form__logo d-table mx-auto mb-3"
-              src={require("../images/shards-dashboards-logo.svg")}
+              src={require("../images/Logo.png")}
               alt="Shards Dashboards - Login Template"
             />
 
             {/* Title */}
             <h5 className="auth-form__title text-center mb-4">
-              Login with Blockstack
+              Login
             </h5>
 
             {/* Form Fields */}
             <Form>
-              {/* <FormGroup>
+              <FormGroup>
                 <label htmlFor="exampleInputEmail1">Email address</label>
                 <FormInput
                   type="email"
@@ -56,12 +57,13 @@ const Login = () => (
               </FormGroup>
               <FormGroup>
                 <FormCheckbox>Remember me for 30 days.</FormCheckbox>
-              </FormGroup> */}
+              </FormGroup>
               <Button
                 pill
                 theme="accent"
                 className="d-table mx-auto"
                 type="submit"
+                style={{ background: "#28C1EA", borderColor: "#28C1EA"}}
                 	// ref is used to access the value of the input fields or the DOM element.  When used on an HTML element, the ref attribute takes a callback function that receives the underlying DOM element as its argument, in this case the input.
                 // ref={submit => {
                 //   this.mysubmit = submit;

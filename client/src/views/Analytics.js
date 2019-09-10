@@ -18,7 +18,7 @@ const Analytics = ({ smallStats }) => (
   <Container fluid className="main-content-container px-4">
     <Row noGutters className="page-header py-4">
       {/* Page Header :: Title */}
-      <PageTitle title="Analytics" subtitle="Overview" className="text-sm-left mb-3" />
+      <PageTitle title="NeoVu Analytics" subtitle="Overview" className="text-sm-left mb-3" />
 
       {/* Page Header :: Actions */}
       <Col xs="12" sm="4" className="col d-flex align-items-center">
@@ -95,7 +95,7 @@ Analytics.propTypes = {
 Analytics.defaultProps = {
   smallStats: [
     {
-      label: "Users",
+      label: "Number of Times Vu Opened",
       value: "2,390",
       percentage: "12.4%",
       increase: true,
@@ -113,7 +113,7 @@ Analytics.defaultProps = {
       ]
     },
     {
-      label: "Sessions",
+      label: "Vu Duration",
       value: "8,391",
       percentage: "7.21%",
       increase: false,
@@ -131,7 +131,7 @@ Analytics.defaultProps = {
       ]
     },
     {
-      label: "Pageviews",
+      label: "Number of Button Taps",
       value: "21,293",
       percentage: "3.71%",
       increase: true,

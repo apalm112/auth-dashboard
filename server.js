@@ -90,6 +90,6 @@ app.listen(port, () => console.log('\x1b[45m%s\x1b[0m', `Server up and running o
 
 Vu.find(function(err, data) {
   if (err) return err;
-  console.log('+++++++++++++++hot phuckits!++++++++++++++++', data);
+  console.log('==DATA from mLab vus collection==', data);
   return data;
 });

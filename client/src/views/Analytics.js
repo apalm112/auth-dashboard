@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Button, ButtonGroup } from "shards-react";
 import { NavLink } from "react-router-dom";
@@ -14,76 +14,109 @@ import GoalsOverview from "../components/analytics/GoalsOverview/GoalsOverview";
 
 import colors from "../utils/colors";
 
-const Analytics = ({ smallStats }) => (
-  <Container fluid className="main-content-container px-4">
-    <Row noGutters className="page-header py-4">
-      {/* Page Header :: Title */}
-      <PageTitle title="NeoVu Analytics" subtitle="Overview" className="text-sm-left mb-3" />
+/* TODO: 
+*       -create performSearch() to fetch() data from mLab & render it
+*       -add that function to componentDidMount()
+*/
 
-      {/* Page Header :: Actions */}
-      <Col xs="12" sm="4" className="col d-flex align-items-center">
-        <ButtonGroup size="sm" className="d-inline-flex mb-3 mb-sm-0 mx-auto">
-          <Button theme="white" tag={NavLink} to="/analytics">
-            Traffic
-          </Button>
-          <Button theme="white" tag={NavLink} to="/ecommerce">
-            Sales
-          </Button>
-        </ButtonGroup>
-      </Col>
+// const Analytics = ({ smallStats }) => (
 
-      {/* Page Header :: Datepicker */}
-      <Col sm="4" className="d-flex">
-        <RangeDatePicker className="justify-content-end" />
-      </Col>
-    </Row>
+// Creates a new Componet Class & exports it.
+export default class Analytics extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      apiKey: process.env.MONGOLAB_URI,
+      vuData: [],
+    };
+  }
+  componentDidMount() {
+    this.performSearch();
+  }
+  performSearch = () => {
+    console.log("HERE---->", process.env.MONGOLAB_URI);
+    // fetch()
+  }
+  render() {
+    const results = this.state.vuData;
+    
+    // const Analytics = ({ smallStats }) => (
+    //Your passed arguments are available to you in an object called props, which in a class based component can be referenced and destructured in the render method as follows:
+    const { smallStats } = this.props;
+    console.log( "smallStats Data: ", smallStats );    
 
-    {/* Small Stats Blocks */}
-    <Row>
-      {smallStats.map((stats, idx) => (
-        <Col key={idx} md="6" lg="3" className="mb-4">
-          <SmallStats
-            id={`small-stats-${idx}`}
-            chartData={stats.datasets}
-            chartLabels={stats.chartLabels}
-            label={stats.label}
-            value={stats.value}
-            percentage={stats.percentage}
-            increase={stats.increase}
-            decrease={stats.decrease}
-          />
-        </Col>
-      ))}
-    </Row>
+    return (
+      <Container fluid className="main-content-container px-4">
+        <Row noGutters className="page-header py-4">
+          {/* Page Header :: Title */}
+          <PageTitle title="NeoVu Analytics" subtitle="Overview" className="text-sm-left mb-3" />
 
-    <Row>
-      {/* Sessions */}
-      <Col lg="8" md="12" sm="12" className="mb-4">
-        <Sessions />
-      </Col>
+          {/* Page Header :: Actions */}
+          <Col xs="12" sm="4" className="col d-flex align-items-center">
+            <ButtonGroup size="sm" className="d-inline-flex mb-3 mb-sm-0 mx-auto">
+              <Button theme="white" tag={NavLink} to="/analytics">
+                Traffic
+              </Button>
+              <Button theme="white" tag={NavLink} to="/ecommerce">
+                Sales
+              </Button>
+            </ButtonGroup>
+          </Col>
 
-      {/* Users by Device */}
-      <Col lg="4" md="6" sm="6" className="mb-4">
-        <UsersByDevice />
-      </Col>
+          {/* Page Header :: Datepicker */}
+          <Col sm="4" className="d-flex">
+            <RangeDatePicker className="justify-content-end" />
+          </Col>
+        </Row>
 
-      {/* Top Referrals */}
-      <Col lg="3" sm="6" className="mb-4">
-        <TopReferrals />
-      </Col>
+        {/* Small Stats Blocks */}
+        <Row>
+          {smallStats.map((stats, idx) => (
+            <Col key={idx} md="6" lg="3" className="mb-4">
+              <SmallStats
+                id={`small-stats-${idx}`}
+                chartData={stats.datasets}
+                chartLabels={stats.chartLabels}
+                label={stats.label}
+                value={stats.value}
+                percentage={stats.percentage}
+                increase={stats.increase}
+                decrease={stats.decrease}
+              />
+            </Col>
+          ))}
+        </Row>
 
-      {/* Goals Overview */}
-      <Col lg="5" className="mb-4">
-        <GoalsOverview />
-      </Col>
+        <Row>
+          {/* Sessions */}
+          <Col lg="8" md="12" sm="12" className="mb-4">
+            <Sessions />
+          </Col>
 
-      {/* Country Reports */}
-      <Col lg="4" className="mb-4">
-        <CountryReports />
-      </Col>
-    </Row>
-  </Container>
-);
+          {/* Users by Device */}
+          <Col lg="4" md="6" sm="6" className="mb-4">
+            <UsersByDevice />
+          </Col>
+
+          {/* Top Referrals */}
+          <Col lg="3" sm="6" className="mb-4">
+            <TopReferrals />
+          </Col>
+
+          {/* Goals Overview */}
+          <Col lg="5" className="mb-4">
+            <GoalsOverview />
+          </Col>
+
+          {/* Country Reports */}
+          <Col lg="4" className="mb-4">
+            <CountryReports />
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+};
 
 Analytics.propTypes = {
   /**
@@ -96,7 +129,7 @@ Analytics.defaultProps = {
   smallStats: [
     {
       label: "Number of Times Vu Opened",
-      value: "2,390",
+      // value: "2,390",
       percentage: "12.4%",
       increase: true,
       chartLabels: [null, null, null, null, null],
@@ -169,4 +202,4 @@ Analytics.defaultProps = {
   ]
 };
 
-export default Analytics;
+// export default Analytics;

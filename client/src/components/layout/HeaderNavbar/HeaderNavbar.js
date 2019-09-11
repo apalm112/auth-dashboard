@@ -17,11 +17,11 @@ class HeaderNavbar extends React.Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     Store.addChangeListener(this.onChange);
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
   }
 

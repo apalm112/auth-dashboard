@@ -5,6 +5,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const VuSchema = new Schema({
+  vu_name: {
+    type: String,
+    required: true
+  },
   num_Vu_Opened: {
     type: Number,
     // required: true
@@ -16,7 +20,7 @@ const VuSchema = new Schema({
   button_taps: {
     type: Number,
     // required: true
-  },
+  }
   // name: {
   //   type: String,
   //   required: true

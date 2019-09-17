@@ -5,47 +5,21 @@
 **********************************************************/
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-
-// Load User model
-// const User = require("../../models/User");
-const Vu = require("../models/Vu");
+const Vu = require("../models/Vu").Vu;
 
 // @route GET api/analytics
 // @desc GET data from mLab neovu Database
 // @access Public
 router.get("/analytics", (req, res) => {
+  console.log('/ROUTES/VU.JS line 14===============');
   // Data display: GET data from DB, save to State.
-  
-  // Vu.find({ 'num_Vu_Opened': { $ne: [] } })
-  //   .exec(function (error, vuData) {
-    //     var results = vuData.map((curr) => {
-  //       var num_Vu_opened = curr.num_Vu_opened;
-  //       var vu_Duration = curr.vu_Duration;
-  //       var button_taps = curr.button_taps;
-  //       return {
-    //         num_Vu_opened: num_Vu_opened,
-    //         vu_Duration: vu_Duration,
-    //         button_taps: button_taps
-    //       };
-    //     });
-    //     console.log('+++++++++++++++++++++++++++++++');
-    
-    //     console.log(results);
-    //     res.json(results);
-    //   });
-  console.log(vuData.button_taps);
-
-    vu.find({}).toArray((err, data) => {
-      console.log('+++++++++++++++++++++++++++++++');
-      if (err) { 
-        console.log(err);
-        res.error(err);
-      } else {
-        res.json(data);
-      }
+  // This route will display the results for all schools w/ which DID NOT REPORT immunizations, there are 117.
+  Vu.find({})
+    .exec(function (error, vuData) {
+      console.log('# of vuData: ', vuData.length, '\n typeof vuData: ', typeof vuData);
+      console.log('GETDATA---------> \n', vuData); // returns an array of objects to the CLI
+      res.json(vuData);
     });
-
 });
 
 module.exports = router;

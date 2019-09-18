@@ -16,14 +16,34 @@ import colors from "../utils/colors";
 
 // const Analytics = ({ smallStats }) => (
 
-// Creates a new Componet Class & exports it.
+// Creates a new Component Class & exports it.
 export default class Analytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vuData: [],
+      vuData: [
+        {
+          label: "SCIENCE EXPO via Analytics.this.state",
+          value: "666",
+          percentage: "6%",
+          increase: true,
+          chartLabels: [null, null, null, null, null],
+          decrease: false,
+
+          datasets: [
+            {
+              label: "Today",
+              fill: "start",
+              borderWidth: 1.5,
+              backgroundColor: colors.primary.toRGBA(0.1),
+              borderColor: colors.primary.toRGBA(),
+              data: [9, 3, 3, 9, 9]
+            }
+          ]
+        },
+      ],
     };
-    this.handleFetchData = this.handleFetchData.bind(this);
+    // this.handleFetchData = this.handleFetchData.bind(this);
   }
 
   async performSearch() {
@@ -63,8 +83,9 @@ export default class Analytics extends Component {
       // console.log(res[key]);
       return res[key];
     }))
-    .then(newRes => this.setState({ vuData: newRes }))
-    // .then(newRes => console.log('FUCK this.state.vuData---->', this.state.vuData))
+      .then(newRes => this.setState((prevState) => {
+        { vuData: Object.assign(prevState, newRes) }}))
+    .then(newRes => console.log('FUCK this.state.vuData---->', this.state.vuData))
     .catch(error => {
       console.error("Error fetching & parsing the data.", error);
     })
@@ -72,13 +93,21 @@ export default class Analytics extends Component {
   /***********************************************************************/
 
   render() {
-    const results = this.state.vuData;
+    const VUDATA = this.state.vuData;
+    const doggo = VUDATA.map((curr) => {
+      return {
+        name: curr.name,
+        opened: curr.num_Vu_Opened,
+        duration: curr.vu_Duration,
+        bt: curr.button_taps }
+    });
+    console.log('{{{{{{{{{{{{{{{{{', VUDATA);
     
     // const Analytics = ({ smallStats }) => (
     //Your passed arguments are available to you in an object called props, which in a class based component can be referenced and destructured in the render method as follows:
     const { smallStats } = this.props;
     // console.log( "smallStats Data from /Analytics.js: ", smallStats );    
-    console.log("this.state.vuData from /Analytics.js: ", results);    
+    // console.log("this.state.vuData from /Analytics.js: ", VUDATA[0]);    
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -106,14 +135,50 @@ export default class Analytics extends Component {
 
         {/* Small Stats Blocks */}
         <Row>
+          <table>
+            <tbody>
+              <colgroup>
+                <col />>
+							<col span="2" />
+                <col span="2" />
+              </colgroup>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Num Vu Opened</th>
+                <th scope="col">Vu Duration</th>
+                <th scope="col">Button Taps</th>
+              </tr>
+              {VUDATA.map((curr) => {
+                return (
+                  <tr key={curr._id}>
+                    <td>{curr.name}</td>
+                    <td>{curr.num_Vu_Opened}</td>
+                    <td>{curr.vu_Duration}</td>
+                    <td>{curr.button_taps}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
           {smallStats.map((stats, idx) => (
             <Col key={idx} md="6" lg="3" className="mb-4">
               <SmallStats
                 id={`small-stats-${idx}`}
                 chartData={stats.datasets}
                 chartLabels={stats.chartLabels}
-                label={stats.label}
-                value={stats.num_Vu_Opened}
+                label={
+                  VUDATA.map((curr) => {
+                    return (
+                      <tr key={curr._id}>
+                        <td>{curr.name}</td>
+                        <td>{curr.num_Vu_Opened}</td>
+                        <td>{curr.vu_Duration}</td>
+                        <td>{curr.button_taps}</td>
+                      </tr>
+                    )
+                  })
+                }
+                value={stats.value}
                 percentage={stats.percentage}
                 increase={stats.increase}
                 decrease={stats.decrease}
@@ -163,7 +228,25 @@ Analytics.propTypes = {
 Analytics.defaultProps = {
   smallStats: [
     {
-      label: "Number of Times Vu Opened",
+      label: "Hard Wired via Analytics.defaultProps",
+      value: 666,
+      percentage: "6%",
+      increase: true,
+      chartLabels: ['UFO', null, null, null, null],
+      decrease: false,
+      datasets: [
+        {
+          label: "Today",
+          fill: "start",
+          borderWidth: 1.5,
+          backgroundColor: colors.primary.toRGBA(0.1),
+          borderColor: colors.primary.toRGBA(),
+          data: [9, 3, 3, 9, 9]
+        }
+      ]
+    },
+    {
+      label: "Users",
       value: "2,390",
       percentage: "12.4%",
       increase: true,
@@ -181,7 +264,7 @@ Analytics.defaultProps = {
       ]
     },
     {
-      label: "Vu Duration",
+      label: "Sessions",
       value: "8,391",
       percentage: "7.21%",
       increase: false,
@@ -199,7 +282,7 @@ Analytics.defaultProps = {
       ]
     },
     {
-      label: "Number of Button Taps",
+      label: "Pageviews",
       value: "21,293",
       percentage: "3.71%",
       increase: true,

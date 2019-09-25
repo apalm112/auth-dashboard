@@ -29,24 +29,24 @@ export default class Analytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chartStats: {
-          label: "",
-          value: 666,
-          percentage: "6%",
-          increase: true,
-          chartLabels: ['UFO', null, null, null, null],
-          decrease: false,
-          datasets: [
-            {
-              label: "Today",
-              fill: "start",
-              borderWidth: 1.5,
-              backgroundColor: colors.primary.toRGBA(0.1),
-              borderColor: colors.salmon.toRGBA(),
-              data: [9, 3, 3, 9, 9],
-            }
-          ]
-        },
+      chartStats: {},
+        //   label: "",
+        //   value: 666,
+        //   percentage: "6%",
+        //   increase: true,
+        //   chartLabels: ['UFO', null, null, null, null],
+        //   decrease: false,
+        //   datasets: [
+        //     {
+        //       label: "Today",
+        //       fill: "start",
+        //       borderWidth: 1.5,
+        //       backgroundColor: colors.primary.toRGBA(0.1),
+        //       borderColor: colors.salmon.toRGBA(),
+        //       data: [9, 3, 3, 9, 9],
+        //     }
+        //   ]
+        // },
       vuData: [],
     };
     // this.handleFetchData = this.handleFetchData.bind(this);
@@ -113,7 +113,9 @@ export default class Analytics extends Component {
   async componentDidMount() {
     try {
       await this.handleDataSetToState();
-      // await this.handleModifyState();    
+      // await this.handleModifyState();
+      const getChartData = this.state.chartStats.datasets[0].data;
+      console.log(getChartData);
     } catch(err) {
       console.error(err);
     }
@@ -123,7 +125,11 @@ export default class Analytics extends Component {
   /***********************************************************************/
   render() {
     const VUDATA = this.state.vuData;
-    // const CHARTSTATS = this.state.chartStats;
+
+    const handleChartData = VUDATA[3];
+    console.log(handleChartData);
+
+   // const CHARTSTATS = this.state.chartStats;
     
     // const Analytics = ({ smallStats }) => (
     //Your passed arguments are available to you in an object called props, which in a class based component can be referenced and destructured in the render method as follows:
@@ -185,18 +191,26 @@ export default class Analytics extends Component {
           </table> */}
           
           { VUDATA.map((stats, idx) => (
-            // handleVuData.map((stats, idx) => (
               <Col key={idx} md="6" lg="3" className="mb-4">
                 <SmallStats
                   id={`small-stats-${idx}`}
                   // chartData={stats[0].datasets[0].data}
-                  chartData={stats.datasets}
-                  chartLabels={stats.chartLabels}
+                  // chartData={stats.datasets}
+                  // chartLabels={stats.chartLabels}
+                  // label={stats.name}
+                  // value={stats.button_taps}
+                  // percentage={stats.num_Vu_Opened}
+                  // increase={stats.increase}
+                  // decrease={stats.decrease}
+
+                  chartData={this.props.smallStats[0].datasets}
+                  chartLabels={this.props.smallStats[0].chartLabels}
                   label={stats.name}
                   value={stats.button_taps}
                   percentage={stats.num_Vu_Opened}
-                  increase={stats.increase}
-                  decrease={stats.decrease}
+                  increase={this.props.smallStats[0].increase}
+                  decrease={this.props.smallStats[0].decrease}
+
                 />
               </Col>
             ))
@@ -241,17 +255,26 @@ Analytics.defaultProps = {
       value: 666,
       percentage: "6%",
       increase: true,
-      chartLabels: ['UFO', null, null, null, null],
+      chartLabels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
       decrease: false,
       datasets: [
         {
-          label: "Today",
+          label: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
           fill: "start",
           borderWidth: 1.5,
           backgroundColor: colors.primary.toRGBA(0.1),
           borderColor: colors.primary.toRGBA(),
+          // find a way to dynamically insert db data into the data property below:
           data: [9, 3, 3, 9, 9]
-        }
+        },
+        {
+          label: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
+          fill: "start",
+          borderWidth: 1.5,
+          backgroundColor: colors.blueishGrey.toRGBA(0.1),
+          borderColor: colors.primary.toRGBA(),
+          data: [19, 13, 13, 19, 19]
+        },
       ]
     },
     {

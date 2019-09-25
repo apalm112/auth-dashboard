@@ -63,7 +63,7 @@ class Sessions extends React.Component {
     };
 
     const AnalyticsOverviewChart = new Chart(this.canvasRef.current, {
-      type: "line",
+      type: "line", // bar, horizontalBar, pie, doughnut, radar, polarArea
       data: this.props.chartData,
       options: chartOptions
     });

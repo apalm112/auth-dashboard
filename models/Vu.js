@@ -20,7 +20,10 @@ const VuSchema = new Schema({
   button_taps: {
     type: Number,
     // required: true
-  }
+  },
+  dates: [{
+    day: { type: Number }
+  }],
   // name: {
   //   type: String,
   //   required: true

@@ -11,8 +11,6 @@ const Vu = require("../models/Vu").Vu;
 // @desc GET data from mLab neovu Database
 // @access Public
 router.get("/analytics", (req, res) => {
-  // Data display: GET data from DB, save to State.
-  // This route will display the results for all schools w/ which DID NOT REPORT immunizations, there are 117.
   Vu.find({})
   .exec(function (error, vuData) {
     console.log('/ROUTES/VU.JS line 18 \n', '# of vuData: ', vuData.length, '\n typeof vuData: ', typeof vuData);

@@ -5,6 +5,7 @@ import shortid from "shortid";
 import { Card, CardBody, CardTitle } from "shards-react";
 
 import Chart from "../../utils/chart";
+import { log } from "util";
 
 class SmallStats extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SmallStats extends React.Component {
         },
         tooltips: {
           enabled: true,
-          custom: true
+          custom: true,
         },
         elements: {
           point: {
@@ -38,6 +39,7 @@ class SmallStats extends React.Component {
             {
               gridLines: false,
               ticks: {
+                beginAtZero: true,
                 display: false
               }
             }
@@ -80,6 +82,10 @@ class SmallStats extends React.Component {
   }
 
   render() {
+
+    console.log('Sauce-->components/common/SmallStats.js this.props: ', this.props);
+    
+
     const { variation, label, value, percentage, increase } = this.props;
 
     const cardClasses = classNames(
@@ -193,8 +199,8 @@ SmallStats.defaultProps = {
   percentage: 0,
   value: 0,
   label: "Label",
-  chartOptions: Object.create(null),
-  chartConfig: Object.create(null),
+  chartOptions: Object.create(null), // creates empty {}
+  chartConfig: Object.create(null), // creates empty {}
   chartData: [],
   chartLabels: []
 };

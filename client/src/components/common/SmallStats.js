@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import shortid from "shortid";
-import { Card, CardBody } from "shards-react";
+import { Card, CardBody, CardTitle } from "shards-react";
 
 import Chart from "../../utils/chart";
 
@@ -22,8 +22,8 @@ class SmallStats extends React.Component {
           display: false
         },
         tooltips: {
-          enabled: false,
-          custom: false
+          enabled: true,
+          custom: true
         },
         elements: {
           point: {
@@ -127,10 +127,11 @@ class SmallStats extends React.Component {
 
     return (
       <Card small className={cardClasses}>
+        <CardTitle>{this.props.label}</CardTitle>
         <CardBody className={cardBodyClasses}>
           <div className={innerWrapperClasses}>
             <div className={dataFieldClasses}>
-              <span className={labelClasses}>{label}</span>
+              {/* <span className={labelClasses}>{label}</span> */}
               <h6 className={valueClasses}>{value}</h6>
             </div>
             <div className={innerDataFieldClasses}>

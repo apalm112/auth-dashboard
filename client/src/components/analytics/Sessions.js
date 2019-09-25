@@ -143,7 +143,7 @@ Sessions.propTypes = {
 };
 
 Sessions.defaultProps = {
-  title: "Sessions",
+  title: "Vu Sessions",
   chartData: {
     labels: [
       "09:00 PM",

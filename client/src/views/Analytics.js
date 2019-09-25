@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Button, ButtonGroup } from "shards-react";
+import { Container, Row, Col, Button, ButtonGroup, Tooltip } from "shards-react";
 import { NavLink } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
@@ -18,30 +18,36 @@ import colors from "../utils/colors";
 
 // Creates a new Component Class & exports it.
 export default class Analytics extends Component {
+
+  static propTypes = {
+    /**
+     * The small stats data.
+     */
+    smallStats: PropTypes.array.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      vuData: [
-        {
-          label: "SCIENCE EXPO via Analytics.this.state",
-          value: "666",
+      chartStats: {
+          label: "",
+          value: 666,
           percentage: "6%",
           increase: true,
-          chartLabels: [null, null, null, null, null],
+          chartLabels: ['UFO', null, null, null, null],
           decrease: false,
-
           datasets: [
             {
               label: "Today",
               fill: "start",
               borderWidth: 1.5,
               backgroundColor: colors.primary.toRGBA(0.1),
-              borderColor: colors.primary.toRGBA(),
-              data: [9, 3, 3, 9, 9]
+              borderColor: colors.salmon.toRGBA(),
+              data: [9, 3, 3, 9, 9],
             }
           ]
         },
-      ],
+      vuData: [],
     };
     // this.handleFetchData = this.handleFetchData.bind(this);
   }
@@ -64,50 +70,66 @@ export default class Analytics extends Component {
     }
   }
 
+  handleModifyState = () => {
+    const VUDATA = this.state.vuData[1].newRes;
+    var cow = VUDATA[1].newRes;
+    cow.map((curr, idx) => {
+      console.log(curr.name, idx);
+      return curr.name;
+    });
+    console.log(cow);
+  };
 /***********************************************************************/
   handleFetchData = async () => {
 		try {
 			const galatica = await fetch('/analytics');
-			const vuData = await galatica.json();			
+			const vuData = await galatica.json();		
 		return vuData;
 		} catch(err) {
 			console.error(err);
 		}
 	};
     
-  componentDidMount() {
-    // this.performSearch();
-    
+  handleDataSetToState = () => {
     this.handleFetchData()
     .then(res => Object.keys(res).map((key) => {
       // console.log(res[key]);
       return res[key];
     }))
-      .then(newRes => this.setState((prevState) => {
-        { vuData: Object.assign(prevState, newRes) }}))
-    .then(newRes => console.log('FUCK this.state.vuData---->', this.state.vuData))
+    .then(res => res.map((curr, idx) => {
+      return curr = Object.assign(curr, (JSON.parse(JSON.stringify(this.state.chartStats))))
+    }))
+    .then(vuData =>
+      // comment back in to see data rendered to dashboard.
+      this.setState({ vuData }
+      // this.setState((prevState) => { return { vuData: [...prevState.vuData, { newRes } ] } }
+      ))
+    // .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
     .catch(error => {
       console.error("Error fetching & parsing the data.", error);
     })
-  }
-  /***********************************************************************/
+  };
 
+  async componentDidMount() {
+    try {
+      await this.handleDataSetToState();
+      // await this.handleModifyState();    
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+
+  /***********************************************************************/
   render() {
     const VUDATA = this.state.vuData;
-    const doggo = VUDATA.map((curr) => {
-      return {
-        name: curr.name,
-        opened: curr.num_Vu_Opened,
-        duration: curr.vu_Duration,
-        bt: curr.button_taps }
-    });
-    console.log('{{{{{{{{{{{{{{{{{', VUDATA);
+    // const CHARTSTATS = this.state.chartStats;
     
     // const Analytics = ({ smallStats }) => (
     //Your passed arguments are available to you in an object called props, which in a class based component can be referenced and destructured in the render method as follows:
-    const { smallStats } = this.props;
-    // console.log( "smallStats Data from /Analytics.js: ", smallStats );    
-    // console.log("this.state.vuData from /Analytics.js: ", VUDATA[0]);    
+    // const { smallStats } = this.props;
+    // console.log( "this.state.chartStats:{{{{ ", CHARTSTATS );    
+    console.log("this.state.vuData from /Analytics.js: ", VUDATA);
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -135,7 +157,7 @@ export default class Analytics extends Component {
 
         {/* Small Stats Blocks */}
         <Row>
-          <table>
+          {/* <table>
             <tbody>
               <colgroup>
                 <col />>
@@ -148,7 +170,8 @@ export default class Analytics extends Component {
                 <th scope="col">Vu Duration</th>
                 <th scope="col">Button Taps</th>
               </tr>
-              {VUDATA.map((curr) => {
+              {
+                VUDATA.map((curr) => {
                 return (
                   <tr key={curr._id}>
                     <td>{curr.name}</td>
@@ -156,35 +179,28 @@ export default class Analytics extends Component {
                     <td>{curr.vu_Duration}</td>
                     <td>{curr.button_taps}</td>
                   </tr>
-                )
-              })}
+                )})
+              }
             </tbody>
-          </table>
-          {smallStats.map((stats, idx) => (
-            <Col key={idx} md="6" lg="3" className="mb-4">
-              <SmallStats
-                id={`small-stats-${idx}`}
-                chartData={stats.datasets}
-                chartLabels={stats.chartLabels}
-                label={
-                  VUDATA.map((curr) => {
-                    return (
-                      <tr key={curr._id}>
-                        <td>{curr.name}</td>
-                        <td>{curr.num_Vu_Opened}</td>
-                        <td>{curr.vu_Duration}</td>
-                        <td>{curr.button_taps}</td>
-                      </tr>
-                    )
-                  })
-                }
-                value={stats.value}
-                percentage={stats.percentage}
-                increase={stats.increase}
-                decrease={stats.decrease}
-              />
-            </Col>
-          ))}
+          </table> */}
+          
+          { VUDATA.map((stats, idx) => (
+            // handleVuData.map((stats, idx) => (
+              <Col key={idx} md="6" lg="3" className="mb-4">
+                <SmallStats
+                  id={`small-stats-${idx}`}
+                  // chartData={stats[0].datasets[0].data}
+                  chartData={stats.datasets}
+                  chartLabels={stats.chartLabels}
+                  label={stats.name}
+                  value={stats.button_taps}
+                  percentage={stats.num_Vu_Opened}
+                  increase={stats.increase}
+                  decrease={stats.decrease}
+                />
+              </Col>
+            ))
+          }
         </Row>
 
         <Row>
@@ -216,13 +232,6 @@ export default class Analytics extends Component {
       </Container>
     );
   }
-};
-
-Analytics.propTypes = {
-  /**
-   * The small stats data.
-   */
-  smallStats: PropTypes.array
 };
 
 Analytics.defaultProps = {

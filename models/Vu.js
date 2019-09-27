@@ -9,10 +9,11 @@ const VuSchema = new Schema({
     type: String,
     required: true
   },
-  num_Vu_Opened: {
+  num_Vu_Opened: [{
     type: Number,
     // required: true
-  },
+    date: Number,
+  }],
   vu_Duration: {
     type: String,
     // required: true
@@ -22,7 +23,7 @@ const VuSchema = new Schema({
     // required: true
   },
   dates: [{
-    day: { type: Number }
+    type: Number, min: 1, max: 31
   }],
   // name: {
   //   type: String,

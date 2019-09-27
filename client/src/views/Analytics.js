@@ -52,38 +52,11 @@ export default class Analytics extends Component {
     // this.handleFetchData = this.handleFetchData.bind(this);
   }
 
-  async performSearch() {
-    // fetch()
-    // should Not need to use fetch(), since vuData is getting passed thru via props destructuring
-    // ^---NVM! The vuData is not getting thru to React YET!
-    //      smallStats is just the PropTypes defaults that are hard wired in.
-    // setState & render collection data:
-    // fetch('/analytics')
-    try {
-      const res = await fetch("http://localhost:5000/analytics")
-        const vuData = await res.json()
-        this.setState({ vuData })
-          .then(res => res.json())
-          .then(data => this.setState({ vuData: data }));    
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  handleModifyState = () => {
-    const VUDATA = this.state.vuData[1].newRes;
-    var cow = VUDATA[1].newRes;
-    cow.map((curr, idx) => {
-      console.log(curr.name, idx);
-      return curr.name;
-    });
-    console.log(cow);
-  };
-/***********************************************************************/
+  /***********************************************************************/
   handleFetchData = async () => {
 		try {
-			const galatica = await fetch('/analytics');
-			const vuData = await galatica.json();		
+			const fetchData = await fetch('/analytics');
+			const vuData = await fetchData.json();		
 		return vuData;
 		} catch(err) {
 			console.error(err);
@@ -102,9 +75,9 @@ export default class Analytics extends Component {
     .then(vuData =>
       // comment back in to see data rendered to dashboard.
       this.setState({ vuData }
-      // this.setState((prevState) => { return { vuData: [...prevState.vuData, { newRes } ] } }
+      // this.setState((prevState) => { return { vuData: [...prevState.vuData, { vuData } ] } }
       ))
-    // .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
+    .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
     .catch(error => {
       console.error("Error fetching & parsing the data.", error);
     })
@@ -113,15 +86,12 @@ export default class Analytics extends Component {
   async componentDidMount() {
     try {
       await this.handleDataSetToState();
-      // await this.handleModifyState();
       const getChartData = this.state.chartStats.datasets[0].data;
       console.log(getChartData);
     } catch(err) {
       console.error(err);
     }
   }
-
-
   /***********************************************************************/
   render() {
     const VUDATA = this.state.vuData;

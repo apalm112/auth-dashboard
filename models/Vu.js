@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const VuSchema = new Schema({
-  vu_name: {
+  label: {
     type: String,
     required: true
   },
-  num_Vu_Opened: [{
+  percentage: [{
     type: Number,
     // required: true
     date: Number,
@@ -18,37 +18,18 @@ const VuSchema = new Schema({
     type: String,
     // required: true
   },
-  button_taps: {
+  value: {
     type: Number,
     // required: true
   },
-  dates: [{
-    type: Number, min: 1, max: 31
+  datasets: [{
+    // label: { type: String },
+    // fill: { type: String },
+    // borderWidth: { type: Number },
+    // backgroundColor: { type: String },
+    // borderColor: { type: String },
+    data: [ Number ]
   }],
-  // name: {
-  //   type: String,
-  //   required: true
-  // },
-  // age: {
-  //   type: Number,
-  //   // required: true
-  // },
-  // gender: {
-  //   type: String,
-  //   // required: true
-  // },
-  // email: {
-  //   type: String,
-  //   required: true
-  // },
-  // password: {
-  //   type: String,
-  //   required: true
-  // },
-  // date: {
-  //   type: Date,
-  //   default: Date.now
-  // }
 });
 
 // module.exports = Vu = mongoose.model("users", VuSchema);

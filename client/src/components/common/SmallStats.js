@@ -83,7 +83,7 @@ class SmallStats extends React.Component {
 
   render() {
 
-    console.log('Sauce-->components/common/SmallStats.js this.props: ', this.props);
+    // console.log('Sauce-->components/common/SmallStats.js this.props: ', this.props);
     
 
     const { variation, label, value, percentage, increase } = this.props;
@@ -198,7 +198,7 @@ SmallStats.defaultProps = {
   increase: true,
   percentage: 0,
   value: 0,
-  label: "Label",
+  label: "Label from /SmallStats.js",
   chartOptions: Object.create(null), // creates empty {}
   chartConfig: Object.create(null), // creates empty {}
   chartData: [],

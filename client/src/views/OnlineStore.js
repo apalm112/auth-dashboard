@@ -51,6 +51,7 @@ const OnlineStore = ({ smallStats }) => (
             increase={stats.increase}
             decrease={stats.decrease}
           />
+          {console.log('DYNAMIC DATA: ', stats.datasets)}
         </Col>
       ))}
     </Row>
@@ -138,7 +139,7 @@ OnlineStore.defaultProps = {
           borderWidth: 1.5,
           backgroundColor: colors.warning.toRGBA(0.1),
           borderColor: colors.warning.toRGBA(),
-          data: [9, 9, 3, 9, 9]
+          data: [9, 900, 3, 9, 9]
         }
       ]
     },

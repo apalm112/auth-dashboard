@@ -29,24 +29,26 @@ export default class Analytics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chartStats: {},
-        //   label: "",
-        //   value: 666,
-        //   percentage: "6%",
-        //   increase: true,
-        //   chartLabels: ['UFO', null, null, null, null],
-        //   decrease: false,
-        //   datasets: [
-        //     {
-        //       label: "Today",
-        //       fill: "start",
-        //       borderWidth: 1.5,
-        //       backgroundColor: colors.primary.toRGBA(0.1),
-        //       borderColor: colors.salmon.toRGBA(),
-        //       data: [9, 3, 3, 9, 9],
-        //     }
-        //   ]
-        // },
+      // chartStats: [
+      //   {
+      //     label: "Generic Label",
+      //     value: "generic value",
+      //     percentage: "generic %",
+      //     increase: true,
+      //     chartLabels: ['UFO', null, null, null, null],
+      //     decrease: false,
+      //     datasets: [
+      //       {
+      //         label: "Today",
+      //         fill: "start",
+      //         borderWidth: 1.5,
+      //         backgroundColor: colors.primary.toRGBA(0.1),
+      //         borderColor: colors.salmon.toRGBA(),
+      //         data: [],
+      //       }
+      //     ]
+      //   }
+      // ],
       vuData: [],
     };
     // this.handleFetchData = this.handleFetchData.bind(this);
@@ -66,11 +68,15 @@ export default class Analytics extends Component {
   handleDataSetToState = () => {
     this.handleFetchData()
     .then(res => Object.keys(res).map((key) => {
-      // console.log(res[key]);
+      console.log('OVER HERE----->', res[key]);
       return res[key];
     }))
     .then(res => res.map((curr, idx) => {
-      return curr = Object.assign(curr, (JSON.parse(JSON.stringify(this.state.chartStats))))
+      // return curr = Object.assign(curr, (JSON.parse(JSON.stringify(this.props.smallStats))))
+
+      var handle = {  }
+
+      return curr = { ...this.props.smallStats, ...curr }
     }))
     .then(vuData =>
       // comment back in to see data rendered to dashboard.
@@ -86,8 +92,8 @@ export default class Analytics extends Component {
   async componentDidMount() {
     try {
       await this.handleDataSetToState();
-      const getChartData = this.state.chartStats.datasets[0].data;
-      console.log(getChartData);
+      // const getChartData = this.state.chartStats.datasets[0].data;
+      // console.log(getChartData);
     } catch(err) {
       console.error(err);
     }
@@ -96,16 +102,15 @@ export default class Analytics extends Component {
   render() {
     const VUDATA = this.state.vuData;
 
-    const handleChartData = VUDATA[3];
-    console.log(handleChartData);
-
-   // const CHARTSTATS = this.state.chartStats;
+   const CHARTSTATS = this.props.smallStats;
     
     // const Analytics = ({ smallStats }) => (
     //Your passed arguments are available to you in an object called props, which in a class based component can be referenced and destructured in the render method as follows:
     // const { smallStats } = this.props;
-    // console.log( "this.state.chartStats:{{{{ ", CHARTSTATS );    
-    console.log("this.state.vuData from /Analytics.js: ", VUDATA);
+    // console.log( "this.state.smallStats:{{{{ ", CHARTSTATS );    
+    // var mLabVuDates = this.props.smallStats.datasets;
+    // console.log("this.state.vuData from /Analytics.js: ", mLabVuDates);
+
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -132,55 +137,27 @@ export default class Analytics extends Component {
         </Row>
 
         {/* Small Stats Blocks */}
-        <Row>
-          {/* <table>
-            <tbody>
-              <colgroup>
-                <col />>
-							<col span="2" />
-                <col span="2" />
-              </colgroup>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Num Vu Opened</th>
-                <th scope="col">Vu Duration</th>
-                <th scope="col">Button Taps</th>
-              </tr>
-              {
-                VUDATA.map((curr) => {
-                return (
-                  <tr key={curr._id}>
-                    <td>{curr.name}</td>
-                    <td>{curr.num_Vu_Opened}</td>
-                    <td>{curr.vu_Duration}</td>
-                    <td>{curr.button_taps}</td>
-                  </tr>
-                )})
-              }
-            </tbody>
-          </table> */}
-          
+        <Row>          
           { VUDATA.map((stats, idx) => (
               <Col key={idx} md="6" lg="3" className="mb-4">
+{/* 
+              {mLabVuDates.map(curr => {
+                // console.log(curr.data);
+                console.log(stats.datasets[0].data);
+                // curr.data = stats.dates;
+                // curr.data = stats.datasets[0].data;
+              })} */}
+
                 <SmallStats
                   id={`small-stats-${idx}`}
-                  // chartData={stats[0].datasets[0].data}
-                  // chartData={stats.datasets}
-                  // chartLabels={stats.chartLabels}
-                  // label={stats.name}
-                  // value={stats.button_taps}
-                  // percentage={stats.num_Vu_Opened}
-                  // increase={stats.increase}
-                  // decrease={stats.decrease}
-
-                  chartData={this.props.smallStats[0].datasets}
-                  chartLabels={this.props.smallStats[0].chartLabels}
-                  label={stats.name}
-                  value={stats.button_taps}
-                  percentage={stats.num_Vu_Opened}
-                  increase={this.props.smallStats[0].increase}
-                  decrease={this.props.smallStats[0].decrease}
-
+                  // chartData={this.props.smallStats.datasets}
+                  chartData={stats.datasets}
+                  label={stats.label}
+                  chartLabels={this.props.smallStats.chartLabels}
+                  value={stats.value}
+                  percentage={stats.percentage}
+                  increase={this.props.smallStats.increase}
+                  decrease={this.props.smallStats.decrease}
                 />
               </Col>
             ))
@@ -219,8 +196,7 @@ export default class Analytics extends Component {
 };
 
 Analytics.defaultProps = {
-  smallStats: [
-    {
+  smallStats: {
       label: "Hard Wired via Analytics.defaultProps",
       value: 666,
       percentage: "6%",
@@ -234,92 +210,84 @@ Analytics.defaultProps = {
           borderWidth: 1.5,
           backgroundColor: colors.primary.toRGBA(0.1),
           borderColor: colors.primary.toRGBA(),
-          // find a way to dynamically insert db data into the data property below:
-          data: [9, 3, 3, 9, 9]
-        },
-        {
-          label: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.blueishGrey.toRGBA(0.1),
-          borderColor: colors.primary.toRGBA(),
-          data: [19, 13, 13, 19, 19]
-        },
-      ]
-    },
-    {
-      label: "Users",
-      value: "2,390",
-      percentage: "12.4%",
-      increase: true,
-      chartLabels: [null, null, null, null, null],
-      decrease: false,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.primary.toRGBA(0.1),
-          borderColor: colors.primary.toRGBA(),
+  //  find a way to dynamically insert db data into the data property below:
           data: [9, 3, 3, 9, 9]
         }
       ]
     },
-    {
-      label: "Sessions",
-      value: "8,391",
-      percentage: "7.21%",
-      increase: false,
-      chartLabels: [null, null, null, null, null],
-      decrease: true,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.success.toRGBA(0.1),
-          borderColor: colors.success.toRGBA(),
-          data: [3.9, 4, 4, 9, 4]
-        }
-      ]
-    },
-    {
-      label: "Pageviews",
-      value: "21,293",
-      percentage: "3.71%",
-      increase: true,
-      chartLabels: [null, null, null, null, null],
-      decrease: false,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.warning.toRGBA(0.1),
-          borderColor: colors.warning.toRGBA(),
-          data: [6, 6, 9, 3, 3]
-        }
-      ]
-    },
-    {
-      label: "Pages/Session",
-      value: "6.43",
-      percentage: "2.71%",
-      increase: false,
-      chartLabels: [null, null, null, null, null],
-      decrease: true,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.salmon.toRGBA(0.1),
-          borderColor: colors.salmon.toRGBA(),
-          data: [0, 9, 3, 3, 3]
-        }
-      ]
-    }
-  ]
+    // {
+    //   label: "Users",
+    //   value: "2,390",
+    //   percentage: "12.4%",
+    //   increase: true,
+    //   chartLabels: [null, null, null, null, null],
+    //   decrease: false,
+    //   datasets: [
+    //     {
+    //       label: "Today",
+    //       fill: "start",
+    //       borderWidth: 1.5,
+    //       backgroundColor: colors.primary.toRGBA(0.1),
+    //       borderColor: colors.primary.toRGBA(),
+    //       data: [9, 3, 3, 9, 9]
+    //     }
+    //   ]
+    // },
+    // {
+    //   label: "Sessions",
+    //   value: "8,391",
+    //   percentage: "7.21%",
+    //   increase: false,
+    //   chartLabels: [null, null, null, null, null],
+    //   decrease: true,
+    //   datasets: [
+    //     {
+    //       label: "Today",
+    //       fill: "start",
+    //       borderWidth: 1.5,
+    //       backgroundColor: colors.success.toRGBA(0.1),
+    //       borderColor: colors.success.toRGBA(),
+    //       data: [3.9, 4, 4, 9, 4]
+    //     }
+    //   ]
+    // },
+    // {
+    //   label: "Pageviews",
+    //   value: "21,293",
+    //   percentage: "3.71%",
+    //   increase: true,
+    //   chartLabels: [null, null, null, null, null],
+    //   decrease: false,
+    //   datasets: [
+    //     {
+    //       label: "Today",
+    //       fill: "start",
+    //       borderWidth: 1.5,
+    //       backgroundColor: colors.warning.toRGBA(0.1),
+    //       borderColor: colors.warning.toRGBA(),
+    //       data: [6, 6, 9, 3, 3]
+    //     }
+    //   ]
+    // },
+    // {
+    //   label: "Pages/Session",
+    //   value: "6.43",
+    //   percentage: "2.71%",
+    //   increase: false,
+    //   chartLabels: [null, null, null, null, null],
+    //   decrease: true,
+    //   datasets: [
+    //     {
+    //       label: "Today",
+    //       fill: "start",
+    //       borderWidth: 1.5,
+    //       backgroundColor: colors.salmon.toRGBA(0.1),
+    //       borderColor: colors.salmon.toRGBA(),
+    //       data: [0, 9, 3, 3, 3]
+    //     }
+    //   ]
+    // }
+  // ]
 };
 
 // export default Analytics;

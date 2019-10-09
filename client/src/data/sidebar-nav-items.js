@@ -21,7 +21,7 @@ export default function () {
   ],
   },
   {
-    title: 'Templates',
+    title: 'User Account',
     items: [{
       title: 'User Account',
       htmlBefore: '<i class="material-icons">&#xE7FD;</i>',

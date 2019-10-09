@@ -38,8 +38,8 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    // component: () => <Redirect to="/login" />
-     component: () => <Redirect to="/analytics" />
+    component: () => <Redirect to="/login" />
+    //  component: () => <Redirect to="/analytics" />
   },
   {
     path: "/analytics",

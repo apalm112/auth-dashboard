@@ -14,8 +14,6 @@ import GoalsOverview from "../components/analytics/GoalsOverview/GoalsOverview";
 
 import colors from "../utils/colors";
 
-// const Analytics = ({ smallStats }) => (
-
 // Creates a new Component Class & exports it.
 export default class Analytics extends Component {
 
@@ -47,7 +45,7 @@ export default class Analytics extends Component {
   handleDataSetToState = () => {
     this.handleFetchData()
     .then(res => Object.keys(res).map((key) => {
-      console.log('OVER HERE----->', res[key]);
+      // console.log('OVER HERE----->', res[key]);
       return res[key];
     }))
     .then(res => res.map((curr, idx) => {
@@ -58,7 +56,7 @@ export default class Analytics extends Component {
       this.setState({ vuData }
       // this.setState((prevState) => { return { vuData: [...prevState.vuData, { vuData } ] } }
       ))
-    .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
+    // .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
     .catch(error => {
       console.error("Error fetching & parsing the data.", error);
     })
@@ -74,7 +72,7 @@ export default class Analytics extends Component {
   /***********************************************************************/
   render() {
     const VUDATA = this.state.vuData;
-
+    console.log('VUDATA', VUDATA);
     return (
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
@@ -84,12 +82,12 @@ export default class Analytics extends Component {
           {/* Page Header :: Actions */}
           <Col xs="12" sm="4" className="col d-flex align-items-center">
             <ButtonGroup size="sm" className="d-inline-flex mb-3 mb-sm-0 mx-auto">
-              <Button theme="white" tag={NavLink} to="/analytics">
+              {/*  <Button theme="white" tag={NavLink} to="/analytics">
                 Traffic
               </Button>
               <Button theme="white" tag={NavLink} to="/ecommerce">
                 Sales
-              </Button>
+              </Button> */}
             </ButtonGroup>
           </Col>
 
@@ -169,5 +167,3 @@ Analytics.defaultProps = {
       ]
     }
 };
-
-// export default Analytics;

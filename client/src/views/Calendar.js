@@ -21,7 +21,7 @@ class Calendar extends React.Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const events = getCalendarEventsData();
     this.setState({
       ...this.state,

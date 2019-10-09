@@ -43,7 +43,7 @@ class TransactionHistory extends React.Component {
     this.handleItemViewDetails = this.handleItemViewDetails.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const tableData = getTransactionHistoryData();
 
     this.setState({

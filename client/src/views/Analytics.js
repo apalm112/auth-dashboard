@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Button, ButtonGroup } from "shards-react";
+import { Container, Row, Col, Button, ButtonGroup, Tooltip } from "shards-react";
 import { NavLink } from "react-router-dom";
 
 import PageTitle from "../components/common/PageTitle";
@@ -14,96 +14,150 @@ import GoalsOverview from "../components/analytics/GoalsOverview/GoalsOverview";
 
 import colors from "../utils/colors";
 
-const Analytics = ({ smallStats }) => (
-  <Container fluid className="main-content-container px-4">
-    <Row noGutters className="page-header py-4">
-      {/* Page Header :: Title */}
-      <PageTitle title="Analytics" subtitle="Overview" className="text-sm-left mb-3" />
+// Creates a new Component Class & exports it.
+export default class Analytics extends Component {
 
-      {/* Page Header :: Actions */}
-      <Col xs="12" sm="4" className="col d-flex align-items-center">
-        <ButtonGroup size="sm" className="d-inline-flex mb-3 mb-sm-0 mx-auto">
-          <Button theme="white" tag={NavLink} to="/analytics">
-            Traffic
-          </Button>
-          <Button theme="white" tag={NavLink} to="/ecommerce">
-            Sales
-          </Button>
-        </ButtonGroup>
-      </Col>
+  static propTypes = {
+    /**
+     * The small stats data.
+     */
+    smallStats: PropTypes.array.isRequired,
+  };
 
-      {/* Page Header :: Datepicker */}
-      <Col sm="4" className="d-flex">
-        <RangeDatePicker className="justify-content-end" />
-      </Col>
-    </Row>
+  constructor(props) {
+    super(props);
+    this.state = {
+      vuData: [],
+    };
+  }
 
-    {/* Small Stats Blocks */}
-    <Row>
-      {smallStats.map((stats, idx) => (
-        <Col key={idx} md="6" lg="3" className="mb-4">
-          <SmallStats
-            id={`small-stats-${idx}`}
-            chartData={stats.datasets}
-            chartLabels={stats.chartLabels}
-            label={stats.label}
-            value={stats.value}
-            percentage={stats.percentage}
-            increase={stats.increase}
-            decrease={stats.decrease}
-          />
-        </Col>
-      ))}
-    </Row>
+  /***********************************************************************/
+  handleFetchData = async () => {
+		try {
+			const fetchData = await fetch('/analytics');
+			const vuData = await fetchData.json();		
+		return vuData;
+		} catch(err) {
+			console.error(err);
+		}
+	};
+    
+  handleDataSetToState = () => {
+    this.handleFetchData()
+    .then(res => Object.keys(res).map((key) => {
+      // console.log('OVER HERE----->', res[key]);
+      return res[key];
+    }))
+    .then(res => res.map((curr, idx) => {
+      // return curr = Object.assign(curr, (JSON.parse(JSON.stringify(this.props.smallStats))))
+      return curr = { ...this.props.smallStats, ...curr }
+    }))
+    .then(vuData =>
+      this.setState({ vuData }
+      // this.setState((prevState) => { return { vuData: [...prevState.vuData, { vuData } ] } }
+      ))
+    // .then(newRes => console.log('this.state.vuData---->', this.state.vuData))
+    .catch(error => {
+      console.error("Error fetching & parsing the data.", error);
+    })
+  };
 
-    <Row>
-      {/* Sessions */}
-      <Col lg="8" md="12" sm="12" className="mb-4">
-        <Sessions />
-      </Col>
+  async componentDidMount() {
+    try {
+      await this.handleDataSetToState();
+    } catch(err) {
+      console.error(err);
+    }
+  }
+  /***********************************************************************/
+  render() {
+    const VUDATA = this.state.vuData;
+    console.log('VUDATA', VUDATA);
+    return (
+      <Container fluid className="main-content-container px-4">
+        <Row noGutters className="page-header py-4">
+          {/* Page Header :: Title */}
+          <PageTitle title="NeoVu Analytics" subtitle="Overview" className="text-sm-left mb-3" />
 
-      {/* Users by Device */}
-      <Col lg="4" md="6" sm="6" className="mb-4">
-        <UsersByDevice />
-      </Col>
+          {/* Page Header :: Actions */}
+          <Col xs="12" sm="4" className="col d-flex align-items-center">
+            <ButtonGroup size="sm" className="d-inline-flex mb-3 mb-sm-0 mx-auto">
+              {/*  <Button theme="white" tag={NavLink} to="/analytics">
+                Traffic
+              </Button>
+              <Button theme="white" tag={NavLink} to="/ecommerce">
+                Sales
+              </Button> */}
+            </ButtonGroup>
+          </Col>
 
-      {/* Top Referrals */}
-      <Col lg="3" sm="6" className="mb-4">
-        <TopReferrals />
-      </Col>
+          {/* Page Header :: Datepicker */}
+          <Col sm="4" className="d-flex">
+            <RangeDatePicker className="justify-content-end" />
+          </Col>
+        </Row>
 
-      {/* Goals Overview */}
-      <Col lg="5" className="mb-4">
-        <GoalsOverview />
-      </Col>
+        {/* Small Stats Blocks */}
+        <Row>          
+          { VUDATA.map((stats, idx) => (
+              <Col key={idx} md="6" lg="3" className="mb-4">
+                <SmallStats
+                  id={`small-stats-${idx}`}
+                  chartData={stats.datasets}
+                  label={stats.label}
+                  chartLabels={this.props.smallStats.chartLabels}
+                  value={stats.value}
+                  percentage={stats.percentage}
+                  increase={this.props.smallStats.increase}
+                  decrease={this.props.smallStats.decrease}
+                />
+              </Col>
+            ))
+          }
+        </Row>
 
-      {/* Country Reports */}
-      <Col lg="4" className="mb-4">
-        <CountryReports />
-      </Col>
-    </Row>
-  </Container>
-);
+        <Row>
+          {/* Sessions */}
+          <Col lg="8" md="12" sm="12" className="mb-4">
+            <Sessions />
+          </Col>
 
-Analytics.propTypes = {
-  /**
-   * The small stats data.
-   */
-  smallStats: PropTypes.array
+          {/* Users by Device */}
+          <Col lg="4" md="6" sm="6" className="mb-4">
+            <UsersByDevice />
+          </Col>
+
+          {/* Top Referrals */}
+          <Col lg="3" sm="6" className="mb-4">
+            <TopReferrals />
+          </Col>
+
+          {/* Goals Overview */}
+          <Col lg="5" className="mb-4">
+            <GoalsOverview />
+          </Col>
+
+          {/* Country Reports */}
+          <Col lg="4" className="mb-4">
+            <CountryReports />
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 };
 
 Analytics.defaultProps = {
-  smallStats: [
-    {
-      label: "Users",
-      value: "2,390",
-      percentage: "12.4%",
+  smallStats: {
+      label: "Hard Wired via Analytics.defaultProps",
+      value: 666,
+      percentage: "6%",
       increase: true,
-      chartLabels: [null, null, null, null, null],
+      chartLabels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
       decrease: false,
       datasets: [
         {
-          label: "Today",
+          label: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
           fill: "start",
           borderWidth: 1.5,
           backgroundColor: colors.primary.toRGBA(0.1),
@@ -111,62 +165,5 @@ Analytics.defaultProps = {
           data: [9, 3, 3, 9, 9]
         }
       ]
-    },
-    {
-      label: "Sessions",
-      value: "8,391",
-      percentage: "7.21%",
-      increase: false,
-      chartLabels: [null, null, null, null, null],
-      decrease: true,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.success.toRGBA(0.1),
-          borderColor: colors.success.toRGBA(),
-          data: [3.9, 4, 4, 9, 4]
-        }
-      ]
-    },
-    {
-      label: "Pageviews",
-      value: "21,293",
-      percentage: "3.71%",
-      increase: true,
-      chartLabels: [null, null, null, null, null],
-      decrease: false,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.warning.toRGBA(0.1),
-          borderColor: colors.warning.toRGBA(),
-          data: [6, 6, 9, 3, 3]
-        }
-      ]
-    },
-    {
-      label: "Pages/Session",
-      value: "6.43",
-      percentage: "2.71%",
-      increase: false,
-      chartLabels: [null, null, null, null, null],
-      decrease: true,
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: colors.salmon.toRGBA(0.1),
-          borderColor: colors.salmon.toRGBA(),
-          data: [0, 9, 3, 3, 3]
-        }
-      ]
     }
-  ]
 };
-
-export default Analytics;

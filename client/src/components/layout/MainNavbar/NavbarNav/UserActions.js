@@ -10,6 +10,7 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+// import { url } from "inspector";
 
 export default class UserActions extends React.Component {
   constructor(props) {
@@ -35,9 +36,11 @@ export default class UserActions extends React.Component {
           <img
             className="user-avatar rounded-circle mr-2"
             src={require("../../../../images/avatars/0.jpg")}
+            // src={("http://www.placepuppy.net/10p/50/50")}
+            // src={("http://www.arnold.fun/17a/50/50")}
             alt="User Avatar"
           />{" "}
-          <span className="d-none d-md-inline-block">Sierra Brooks</span>
+          <span className="d-none d-md-inline-block">Sierra MacGuyver</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="user-profile">
@@ -49,9 +52,9 @@ export default class UserActions extends React.Component {
           <DropdownItem tag={Link} to="file-manager-list">
             <i className="material-icons">&#xE2C7;</i> Files
           </DropdownItem>
-          <DropdownItem tag={Link} to="transaction-history">
+          {/* <DropdownItem tag={Link} to="transaction-history">
             <i className="material-icons">&#xE896;</i> Transactions
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem divider />
           <DropdownItem tag={Link} to="/" className="text-danger">
             <i className="material-icons text-danger">&#xE879;</i> Logout

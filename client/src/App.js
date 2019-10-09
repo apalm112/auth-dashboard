@@ -5,7 +5,7 @@
 **********************************************************/
 
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Switch
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -15,8 +15,8 @@ import store from "./store";
 
 // import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
+import Register from "./views/Register";
+import Login from "./views/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 
@@ -57,8 +57,20 @@ class App extends Component {
       <Provider store={store}> 
         <Router basename={process.env.REACT_APP_BASENAME || ""}>
 
+
+
           {/* START OF SD CODE */}
           <div>
+          {/* <div className="App">
+              <Navbar />
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+          </div> 
+          */}
             {routes.map((route, index) => {
               return (
                 <Route

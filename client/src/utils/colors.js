@@ -40,9 +40,11 @@ const grays = {
 };
 
 const colors = {
-  'blueishGrey': new Color('#5A6169'),
+  'blueishGrey': new Color('#28C1EA'),
+  // 'blueishGrey': new Color('#5A6169'),
   'blue'       : new Color('#ff007e'),
   // ^--This changes the Chart.js color from blue to NeoWare pink!
+  // NeoWare blue: #28C1EA
   // : new Color('#007bff'),
   'indigo'     : new Color('#674eec'),
   'purple'     : new Color('#8445f7'),

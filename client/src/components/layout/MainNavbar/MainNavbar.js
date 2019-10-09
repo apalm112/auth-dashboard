@@ -28,7 +28,7 @@ const MainNavbar = ({ layout, stickyTop }) => {
                   id="main-logo"
                   className="d-inline-block align-top mr-1 ml-3"
                   style={{ maxWidth: "25px" }}
-                  src={require("../../../images/shards-dashboards-logo.svg")}
+                  src={require("../../../images/Logo.png")}
                   alt="Shards Dashboard"
                 />
                 <span className="d-none d-md-inline ml-1">

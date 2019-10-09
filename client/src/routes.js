@@ -38,24 +38,24 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    // component: () => <Redirect to="/login" />
-     component: () => <Redirect to="/analytics" />
+    component: () => <Redirect to="/login" />
+    //  component: () => <Redirect to="/analytics" />
   },
   {
     path: "/analytics",
     layout: DefaultLayout,
     component: Analytics
   },
-  {
-    path: "/ecommerce",
-    layout: DefaultLayout,
-    component: OnlineStore
-  },
-  {
-    path: "/blog-overview",
-    layout: DefaultLayout,
-    component: BlogOverview
-  },
+  // {
+  //   path: "/ecommerce",
+  //   layout: DefaultLayout,
+  //   component: OnlineStore
+  // },
+  // {
+  //   path: "/blog-overview",
+  //   layout: DefaultLayout,
+  //   component: BlogOverview
+  // },
   {
     path: "/user-profile",
     layout: DefaultLayout,
@@ -101,17 +101,17 @@ export default [
     layout: DefaultLayout,
     component: FileManagerCards
   },
-  {
-    path: "/transaction-history",
-    layout: DefaultLayout,
-    component: TransactionHistory
-  },
+  // {
+  //   path: "/transaction-history",
+  //   layout: DefaultLayout,
+  //   component: TransactionHistory
+  // },
   {
     path: "/calendar",
     layout: DefaultLayout,
     component: Calendar
   },
-  {
+  /* {
     path: "/add-new-post",
     layout: DefaultLayout,
     component: AddNewPost
@@ -146,4 +146,5 @@ export default [
     layout: IconSidebar,
     component: IconSidebarView
   }
+  */
 ];

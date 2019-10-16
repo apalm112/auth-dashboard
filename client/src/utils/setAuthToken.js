@@ -1,6 +1,7 @@
 /*********************************************************
 
       MERN-AUTH FILE.
+      We’ll use this to set and delete the Authorization header for our axios requests depending on whether a user is logged in or not.
 
 **********************************************************/
 

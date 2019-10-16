@@ -30,7 +30,7 @@ import "./assets/main.scss";
 // end SD imports
 
 /* MERN-AUTH CODE BLOCK  */
-// Check for token to keep user logged in
+// Check for token to keep user logged in even if they close or refresh the app (e.g. until they log out or the token expires)
 if (localStorage.jwtToken) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
@@ -38,6 +38,7 @@ if (localStorage.jwtToken) {
   // Decode token and get user info and exp
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
+  // redux-thunk: middleware for Redux that allows us to directly access the `dispatch()` method to make asynchronous calls from our actions
   store.dispatch(setCurrentUser(decoded));
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
@@ -98,13 +99,16 @@ class App extends Component {
 }
 export default App;
 
-// Removed
+// Removed MERN AUTH Code Block for Private Route Component
 //  <div className="App">
 //   {/* <Navbar /> */}
 //   <Route exact path="/" component={Landing} />
 //   <Route exact path="/register" component={Register} />
 //   <Route exact path="/login" component={Login} />
 //   <Switch>
+{/* 
+                  Pull in our Dashboard component and define it as a PrivateRoute 
+              */}
 //     <PrivateRoute exact path="/dashboard" component={Dashboard} />
 //   </Switch>
 // </div>

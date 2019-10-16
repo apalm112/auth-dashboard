@@ -1,7 +1,10 @@
 /*********************************************************
 
       MERN-AUTH FILE.
-
+      Our general flow for our actions will be as follows.
+      Import dependencies and action definitions from types.js
+      Use axios to make HTTPRequests within certain action
+      Use dispatch to send actions to our reducers
 **********************************************************/
 
 import axios from "axios";
@@ -11,6 +14,7 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 // Register User
+// redux-thunk: middleware for Redux that allows us to directly access the `dispatch()` method to make asynchronous calls from our actions
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
@@ -30,7 +34,7 @@ export const loginUser = userData => dispatch => {
     .then(res => {
       // Save to localStorage
 
-      // Set token to localStorage
+      // Set token to localStorage, is the same as const token = res.data.token;
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header

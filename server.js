@@ -16,14 +16,14 @@ const express = require("express");
 
   // DATABASE REQUIRES
   // const MongoClient = require('mongodb').MongoClient;
-const User = require('./models/User').User;
-const Vu = require('./models/Vu').Vu;
+// const User = require('./models/User').User;
+// const Vu = require('./models/Vu').Vu;
 const mLabDB = require("./config/keys").mongoURI;
 const MONGOLAB_URI = process.env.MONGOLAB_URI; // <--Is NOT Working when passed into Mongoose!
 
 // Get Routes
-const vu_Router = require("./routes/vu");
-const router = require("./routes/api/users");
+// const vu_Router = require("./routes/vu");
+const usersRouter = require("./routes/api/users");
 
 const app = express();
 
@@ -42,8 +42,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Routes
-app.use("/", vu_Router);
-// app.use("/", router);
+// app.use("/", vu_Router);
+app.use("/", usersRouter);
 
 // Passport middleware
 app.use(passport.initialize());

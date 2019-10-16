@@ -15,36 +15,20 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Load User model
-const User = require("../../models/User");
-const Vu = require("../../models/Vu");
+const User = require("../../models/User").User;
+const Vu = require("../../models/Vu").Vu;
 
 // @route GET api/analytics
 // @desc GET data from mLab neovu Database
 // @access Public
 router.get("/analytics", (req, res) => {
-  // Data display: GET data from DB, save to State.
-  console.log('+++++++++++++++++++++++++++++++');
-
-  Vu.find({ 'num_Vu_Opened': { $ne: [] } })
-    .exec(function(error, vuData) {
-      var results = vuData.map((curr) => {
-        var num_Vu_opened = curr.num_Vu_opened;
-        var vu_Duration = curr.vu_Duration;
-        var button_taps = curr.button_taps;
-        return {
-          num_Vu_opened: num_Vu_opened,
-          vu_Duration: vu_Duration,
-          button_taps: button_taps
-        };
-      });
-      console.log('+++++++++++++++++++++++++++++++');
-      
-      console.log(results);
-      res.send(results);
+  Vu.find({})
+    .exec(function (error, vuData) {
+      console.log('/ROUTES/VU.JS line 18 \n', '# of vuData: ', vuData.length, '\n typeof vuData: ', typeof vuData);
+      console.log('GETDATA---------> \n', vuData); // returns an array of objects to the CLI
+      res.json(vuData);
     });
 });
-
-
 
 // @route POST api/users/register
 // @desc Register user

@@ -62,16 +62,12 @@ class App extends Component {
 
           {/* START OF SD CODE */}
           <div>
-          {/* <div className="App">
-              <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
+          <div className="App">
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div> 
-          */}
+         
             {routes.map((route, index) => {
               return (
                 <Route

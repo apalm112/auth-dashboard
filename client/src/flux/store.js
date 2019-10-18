@@ -5,7 +5,7 @@ import { EventEmitter } from "events";
 *******************************************/
 
 import Dispatcher from "./dispatcher";
-import Constants from "../utils/flux-constants";
+import Constants from "./constants";
 import getSidebarNavItems from "../data/sidebar-nav-items";
 
 let _store = {

@@ -36,10 +36,12 @@ router.get("/analytics", (req, res) => {
 router.post("/register", (req, res) => {
   // Form validation
 
+  console.log('/REGISTER ROUTE HIT', req.body);
   const { errors, isValid } = validateRegisterInput(req.body);
 
   // Check validation
   if (!isValid) {
+    
     return res.status(400).json(errors);
   }
 

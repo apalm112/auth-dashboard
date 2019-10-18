@@ -2,7 +2,7 @@
   FLUX STORE
 *******************************************/
 
-import Constants from "./constants";
+import Constants from "../utils/flux-constants";
 import Dispatcher from "./dispatcher";
 import Store from "./store";
 

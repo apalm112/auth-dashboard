@@ -1,0 +1,22 @@
+var users = [
+  { "number of times Vu opened": 6380,
+    "Duration": "5:42:10",
+    "Number of Button Taps": 1283,
+  },
+  { "number of times Vu opened": 4,
+    "Duration": "3",
+    "Number of Button Taps": 1,
+  },
+  { "number of times Vu opened": 89,
+    "Duration": "4",
+    "Number of Button Taps": 12,
+  },
+  { "number of times Vu opened": 55,
+    "Duration": "12",
+    "Number of Button Taps": 4,
+  },
+  { "number of times Vu opened": 800,
+    "Duration": "18:12:00",
+    "Number of Button Taps": 900,
+  }
+];

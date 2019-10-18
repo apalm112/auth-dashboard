@@ -17,7 +17,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 // redux-thunk: middleware for Redux that allows us to directly access the `dispatch()` method to make asynchronous calls from our actions
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post("/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({

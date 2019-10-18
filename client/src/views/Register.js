@@ -65,8 +65,9 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-
+    
     this.props.registerUser(newUser, this.props.history);
+    console.log('OVER HERE:  ', newUser);
   };
 
   render() {
@@ -93,7 +94,25 @@ class Register extends Component {
                 {/* Form Fields */}
                 <Form onSubmit={this.onSubmit}>
                   <FormGroup>
+                    <label htmlFor="exampleName">Name</label>
+                    <span className="red-text">{errors.name}</span>
+                    <FormInput
+                      type="name"
+                      id="name" //exampleInputEmail1
+                      placeholder="Enter name"
+                      autoComplete="name"
+
+                      onChange={this.onChange}
+                      value={this.state.name}
+                      error={errors.name}
+                      className={classnames("", {
+                        invalid: errors.name
+                      })}
+                    />
+                  </FormGroup>
+                  <FormGroup>
                     <label htmlFor="exampleInputEmail1">Email address</label>
+                    <span className="red-text">{errors.email}</span>
                     <FormInput
                       type="email"
                       id="email" //exampleInputEmail1
@@ -125,11 +144,11 @@ class Register extends Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <label htmlFor="exampleInputPassword2">Repeat Password</label>
+                    <label htmlFor="exampleInputPassword2">Confirm Password</label>
                     <FormInput
                       type="password"
                       id="password2"  // exampleInputPassword2
-                      placeholder="Repeat Password"
+                      placeholder="Confirm Password"
                       autoComplete="new-password"
 
                       onChange={this.onChange}
@@ -145,14 +164,14 @@ class Register extends Component {
                       I agree with the <a href="#">Terms & Conditions</a>.
                     </FormCheckbox>
                   </FormGroup>
-                  <Button
+                  <button
                     pill
                     theme="accent"
                     className="d-table mx-auto"
                     type="submit"
                   >
                     Create Account
-                  </Button>
+                  </button>
                 </Form>
               </CardBody>
 
@@ -174,11 +193,11 @@ class Register extends Component {
                       <i className="fab fa-github" />
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="#">
                       <i className="fab fa-google-plus-g" />
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </CardFooter>
             </Card>
